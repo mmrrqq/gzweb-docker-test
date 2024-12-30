@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
   // }
   
   import { SceneManager } from 'gzweb';
+import { environment } from 'src/environments/environment';
   
   
 @Component({
@@ -20,9 +21,10 @@ export class AppComponent implements OnInit {
   }
 
   /**
-   * Websocket URL
+   * Websocket URL 
+   * TODO: do not hardcode container name and port
    */
-  public wsUrl = 'ws://localhost:9002';
+  public wsUrl = `${environment.userID}gzserver9002.localdev.me`;
 
   /**
    * Websocket Key
