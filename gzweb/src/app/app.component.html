@@ -1,0 +1,16 @@
+<section>
+  <!-- <button mat-raised-button color="primary" (click)="fog()" *ngIf="sceneManager && (sceneManager.getConnectionStatusAsObservable() | async) === true">
+    Add Fog
+  </button> -->
+
+  <button mat-raised-button color="primary" (click)="snapshot()" *ngIf="sceneManager && (sceneManager.getConnectionStatusAsObservable() | async) === true">
+    Take snapshot
+  </button>
+
+  <button mat-raised-button color="primary" (click)="resetView()" *ngIf="sceneManager && (sceneManager.getConnectionStatusAsObservable() | async) === true">
+    Reset View
+  </button>
+</section>
+
+<div id="container" (window:resize)="resize()">
+</div>

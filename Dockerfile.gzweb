@@ -1,0 +1,40 @@
+FROM ubuntu:jammy
+
+# Use bash instead of sh
+SHELL ["/bin/bash", "-c"]
+
+# Install dependencies
+RUN apt update && apt install -y \
+    curl \
+    git \
+    && apt clean
+
+# Install nvm, node, npm and configure environment
+ENV NVM_DIR=/root/.nvm
+ENV NODE_VERSION=20
+ENV PATH=$NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
+
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash \
+    && . $NVM_DIR/nvm.sh \
+    && nvm install $NODE_VERSION \
+    && nvm alias default $NODE_VERSION \
+    && nvm use default
+
+# Verify installations
+RUN . $NVM_DIR/nvm.sh && node -v && npm -v
+
+# Clone and set up gzweb
+WORKDIR /root
+COPY ./gzweb/ /root/gzweb/
+WORKDIR /root/gzweb
+RUN . $NVM_DIR/nvm.sh && npm install
+
+# Set up shell
+RUN echo 'export NVM_DIR="$HOME/.nvm"' >> $HOME/.bashrc \
+    && echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $HOME/.bashrc \
+    && echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"' >> $HOME/.bashrc
+
+EXPOSE 4200
+
+# Start the application
+CMD ["/bin/bash", "-c", "source $HOME/.nvm/nvm.sh && npm start"]
