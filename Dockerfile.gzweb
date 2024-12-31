@@ -39,4 +39,4 @@ RUN /bin/bash -c "source $HOME/.nvm/nvm.sh && npm run build"
 EXPOSE 8000
 
 # Start the application
-CMD ["/bin/bash", "-c", "source $HOME/.nvm/nvm.sh && npx lite-server -c lite-server.json"]
+CMD ["/bin/bash", "-c", "source $HOME/.nvm/nvm.sh && npm run build && npx lite-server -c lite-server.json"]
