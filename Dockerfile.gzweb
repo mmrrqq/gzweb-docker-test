@@ -34,7 +34,9 @@ RUN echo 'export NVM_DIR="$HOME/.nvm"' >> $HOME/.bashrc \
     && echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $HOME/.bashrc \
     && echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"' >> $HOME/.bashrc
 
-EXPOSE 4200
+RUN /bin/bash -c "source $HOME/.nvm/nvm.sh && npm run build"
+
+EXPOSE 8000
 
 # Start the application
-CMD ["/bin/bash", "-c", "source $HOME/.nvm/nvm.sh && npm start"]
+CMD ["/bin/bash", "-c", "source $HOME/.nvm/nvm.sh && npx lite-server -c lite-server.json"]

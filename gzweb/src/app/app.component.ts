@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
    * Websocket URL 
    * TODO: do not hardcode container name and port
    */
-  public wsUrl = `${environment.userID}gzserver9002.localdev.me`;
+  public wsUrl = `ws://${environment.userID}gzserver9002.localdev.me`;
 
   /**
    * Websocket Key
