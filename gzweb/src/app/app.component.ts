@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   
   import { SceneManager } from 'gzweb';
 import { environment } from 'src/environments/environment';
+import { ConfigService } from 'src/service/configService';
   
   
 @Component({
@@ -15,16 +16,12 @@ import { environment } from 'src/environments/environment';
 })
 export class AppComponent implements OnInit {
 
+  constructor (private config: ConfigService) {}
+
 
   ngOnInit(): void {
     this.connect()
-  }
-
-  /**
-   * Websocket URL 
-   * TODO: do not hardcode container name and port
-   */
-  public wsUrl = `ws://${environment.userID}gzserver9002.localdev.me`;
+  }  
 
   /**
    * Websocket Key
@@ -40,8 +37,9 @@ export class AppComponent implements OnInit {
    * Connect to the Simulation.
    */
   public connect() {
+    const wsUrl = `ws://${this.config.get("userID")}gzserver9002.localdev.me`;
     this.sceneManager = new SceneManager({
-      websocketUrl: this.wsUrl,
+      websocketUrl: wsUrl,
       websocketKey: this.authKey,
       elementId: 'container',
     });
